@@ -96,6 +96,11 @@
     mariadb
     openjdk21 
     git 
+      #für autoformat in vim 
+      nodePackages.prettier
+      black
+      clang-tools
+      shfmt
 #    libreoffice
     (vim-full.customize { 
       name = "vim"; 
@@ -113,6 +118,7 @@
           vim-polyglot 
           indentLine 
           auto-pairs 
+          vim-autoformat
         ];
       };
       vimrcConfig.customRC = '' 
@@ -141,6 +147,9 @@
         
         " Leertaste + fg sucht in Git-Dateien
         nnoremap <leader>fg :GFiles<CR> 
+
+        "autoformat mit f3"
+        noremap <F3> :Autoformat<CR>
       '';
     }) 
   ];
