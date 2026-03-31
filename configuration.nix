@@ -95,6 +95,7 @@
   environment.systemPackages = with pkgs; [ 
     mariadb
     openjdk21 
+    jdk17
     git 
       #für autoformat in vim 
       nodePackages.prettier
