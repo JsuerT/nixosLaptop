@@ -9,7 +9,7 @@ let
     url = "https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz";
   };
 
-  myVim = pkgs.vim_configurable.customize {
+  myVim = pkgs.vim-full.customize {
     name = "vim";
     vimrcConfig.packages.myVimPackage = {
       start = with pkgs.vimPlugins; [
