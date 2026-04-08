@@ -114,6 +114,7 @@ in
     myVim
     wireshark
     firefox
+    android-tools
   ];
 
   # Umgebungsvariablen
