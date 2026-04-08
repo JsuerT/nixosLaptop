@@ -1,14 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  homeManagerTarball = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  };
-
-  plasmaManagerTarball = builtins.fetchTarball {
-    url = "https://github.com/nix-community/plasma-manager/archive/trunk.tar.gz";
-  };
-
   myVim = pkgs.vim-full.customize {
     name = "vim";
     vimrcConfig.packages.myVimPackage = {
@@ -26,6 +18,7 @@ let
         auto-pairs
         vim-autoformat
         vim-colors-solarized
+        coc-nvim # Nodejs bleibt in den Paketen für CoC Support
       ];
     };
 
@@ -55,167 +48,83 @@ let
       let g:airline_theme = 'solarized'
       let g:airline_powerline_fonts = 1
 
-      " Leader
+      " Leader & Keybinds
       let mapleader = " "
-
-      " NERDTree
       nnoremap <C-n> :NERDTreeToggle<CR>
-
-      " File search
       nnoremap <leader>ff :Files<CR>
       nnoremap <leader>fg :GFiles<CR>
-
-      " Autoformat
       nnoremap <F3> :Autoformat<CR>
+
+      " CoC (Autocompletion) Konfiguration
+      inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+      inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+      inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
     '';
   };
 in
 {
   imports = [
     ./hardware-configuration.nix
-    "${homeManagerTarball}/nixos"
   ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Hostname and networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  # Time and locale
   time.timeZone = "Europe/Berlin";
-
   i18n.defaultLocale = "en_GB.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
-  };
+  
+  services.xserver.xkb = { layout = "de"; variant = ""; };
+  console.keyMap = "de";
 
-  # Graphical desktop
+  # Plasma 6
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "";
-  };
-
-  console.keyMap = "de";
-
-  # Printing
-  services.printing.enable = true;
-
   # Audio
   security.rtkit.enable = true;
-  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber.enable = true;
   };
 
-  # Touchpad / input
-  services.libinput.enable = true;
-
   # Fonts
-  fonts.packages = with pkgs; [
-    jetbrains-mono
-  ];
-
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "JetBrains Mono" ];
-  };
+  fonts.packages = with pkgs; [ jetbrains-mono ];
 
   # User
   users.users.ticco = {
     isNormalUser = true;
     description = "ticco";
     extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
-    packages = with pkgs; [ ];
   };
 
-  # Programs
-  programs.firefox.enable = true;
-  programs.nm-applet.enable = true;
-  programs.mtr.enable = true;
-
-  # Unfree packages
+  # Lizenzen & Unfree
   nixpkgs.config.allowUnfree = true;
 
-  # Database
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-  };
-
-  # System packages
+  # System Pakete
   environment.systemPackages = with pkgs; [
-    git
-    curl
-    wget
-    htop
-    btop
-    tree
-    ripgrep
-    fd
-    unzip
-    zip
-
-    mariadb
-    openjdk21
-    openjdk17
-    nodePackages.prettier
-    python3Packages.black
-    clang-tools
-    shfmt
-
+    git curl wget htop ripgrep fd unzip zip
+    nodejs # Notwendig für CoC in Vim
     myVim
+    wireshark
   ];
 
-  # Default editor
+  # Umgebungsvariablen
   environment.variables = {
     EDITOR = "vim";
     VISUAL = "vim";
   };
 
-  # Home Manager
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-
-  home-manager.users.ticco = { ... }: {
-    imports = [
-      "${plasmaManagerTarball}/modules"
-    ];
-
-    programs.plasma = {
-      enable = true;
-      shortcuts = {
-        "kwin" = {
-          "Switch to Desktop1" = "Meta+1";
-          "Switch to Desktop 2" = "Meta+2";
-          "Switch to Desktop 3" = "Meta+3";
-          "Window Maximize" = "Meta+Up";
-        };
-
-        "services/org.kde.konsole.desktop" = {
-          "_launch" = "Meta+Return";
-        };
-      };
-    };
-
-    home.stateVersion = "24.11";
+  # Datenbank
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
   };
 
   system.stateVersion = "24.11";
