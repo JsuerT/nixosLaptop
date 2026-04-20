@@ -130,6 +130,7 @@ in
     firefox
     android-tools
     libreoffice
+    arduino
   ];
 
 
