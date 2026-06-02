@@ -19,7 +19,7 @@ let
         auto-pairs
         vim-autoformat
         vim-colors-solarized
-        coc-nvim       
+        coc-nvim
       ];
     };
 
@@ -62,7 +62,7 @@ let
       inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
     '';
   };
-in
+      in
 
 ###################################################################################
 
@@ -80,7 +80,7 @@ in
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_GB.UTF-8";
-  
+
   services.xserver.xkb = { layout = "de"; variant = ""; };
   console.keyMap = "de";
 
@@ -90,24 +90,25 @@ in
   services.desktopManager.plasma6.enable = true;
 
   #fingerprint
-  services.fprintd = {
-    enable = true; 
+  /*services.fprintd = {
+    enable = true;
     tod = {
-      enable = true; 
-      driver = pkgs.libfprint-2-tod1-goodix; 
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-goodix;
     };
   };
-  security.pam.services.login.fprintAuth = true; 
-  security.pam.services.sudo.fprintAuth = true; 
-  services.fwupd.enable = true; 
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.sudo.fprintAuth = true;
+  services.fwupd.enable = true;
+  */
 
   #touchscreen
 #funktioniert nicht :/
 
-#  boot.kernelParams = [ "psmouse.synaptics_intertouch=1" "i2c_designware.forcing_timing=1""ic2_hid.noselftest=1"];
- # boot.initrd.kernelModules = [ "i2c_hid_acpi" "hid_multitouch" "raydium_i2c_ts" ];
- # boot.kernelModules = [ "hid_multitouch" "i2c_hid_acpi" ];
- # services.libinput.enable = true;
+boot.kernelParams = [ "psmouse.synaptics_intertouch=1" "i2c_designware.forcing_timing=1""ic2_hid.noselftest=1"];
+boot.initrd.kernelModules = [ "i2c_hid_acpi" "hid_multitouch" "raydium_i2c_ts" ];
+boot.kernelModules = [ "hid_multitouch" "i2c_hid_acpi" ];
+services.libinput.enable = true;
 
 
   # Audio
@@ -126,28 +127,43 @@ in
     extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
   };
 
+#keys assignment
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        settings = {
+          main = {
+           pageup= "102nd";
+           pagedown= "S-102nd";
+          };
+        };
+      };
+    };
+  };
+
   # Lizenzen & Unfree
   nixpkgs.config.allowUnfree = true;
 
   # System Pakete
   environment.systemPackages = with pkgs; [
-    git 
+    git
     jdk21
-    curl 
-    wget 
-    htop 
-    ripgrep 
-    fd 
-    unzip 
+    curl
+    wget
+    htop
+    ripgrep
+    fd
+    unzip
     zip
     htop
 
-    #für compilierne von latex 
+    #für compilierne von latex
     texliveFull
     biber
 
     discord
-    nodejs     
+    nodejs
     vimconfig
     wireshark
     firefox
@@ -157,7 +173,7 @@ in
   ];
 
   environment.shellAliases={
-   bye="shutdown now";
+    bye="shutdown now";
     Ergo="cd /run/media/ticco/INTENSO/SchuleErgo";
     Info="cd /run/media/ticco/INTENSO/Info";
     ".."= "cd ..";
