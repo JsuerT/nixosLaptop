@@ -178,6 +178,11 @@ services.libinput.enable = true;
     Ergo="cd /run/media/ticco/INTENSO/SchuleErgo";
     Info="cd /run/media/ticco/INTENSO/Info";
     ".."= "cd ..";
+    list="for c in $(ls | cut -c1 | sort -u); do
+    echo "$c"
+    ls | grep "^$c" | sed 's/^/├── /'
+    echo
+done";
 
   };
 
