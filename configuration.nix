@@ -147,6 +147,7 @@ services.libinput.enable = true;
 
   # System Pakete
   environment.systemPackages = with pkgs; [
+    wezterm
     git
     jdk21
     curl
