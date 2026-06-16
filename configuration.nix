@@ -179,6 +179,7 @@ services.libinput.enable = true;
     Ergo="cd /run/media/ticco/INTENSO/SchuleErgo";
     Info="cd /run/media/ticco/INTENSO/Info";
     ".."= "cd ..";
+    rmdown = "rm -rf ~/Downloads&& mkdir Downloads";
     
   list = ''
     for c in $(ls | cut -c1 | sort -u); do
@@ -197,5 +198,3 @@ services.libinput.enable = true;
 
   system.stateVersion = "24.11";
 }
-
-
