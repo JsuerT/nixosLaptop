@@ -174,7 +174,7 @@ services.libinput.enable = true;
     steam
   ];
 
-  environment.etc."xdg/wezterm.lua".source = ./wezterm.lua;
+  environment.etc."xdg/wezterm/wezterm.lua".source = ./wezterm.lua;
 
   environment.shellAliases={
     bye="shutdown now";
