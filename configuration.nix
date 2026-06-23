@@ -174,6 +174,8 @@ services.libinput.enable = true;
     steam
   ];
 
+  environment.etc."xdg/wezterm.lua".source = ./wezterm.lua;
+
   environment.shellAliases={
     bye="shutdown now";
     Ergo="cd /run/media/ticco/INTENSO/SchuleErgo";
