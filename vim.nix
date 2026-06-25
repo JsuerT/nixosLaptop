@@ -57,5 +57,8 @@ pkgs.vim-full.customize {
     inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
     inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
     inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-  '';
+  
+    "nerdtree"
+    autocmd VimEnter * NERDTree | wincmd p
+'';
 }
