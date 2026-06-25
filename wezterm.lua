@@ -4,12 +4,20 @@ local config = wezterm.config_builder()
 
 -- --- Schriftart ---
 config.font = wezterm.font('JetBrains Mono')
-config.font_size = 13.0
+config.font_size = 11.0
 
 -- --- Fenster-Styling für Plasma 6 ---
 config.window_decorations = "RESIZE"
 -- config.window_background_opacity = 0.88
 config.scrollback_lines = 5000
+
+--padding
+config.window_padding = {
+  left = 15, 
+  right = 15, 
+  top = 15, 
+  bottom = 30,
+}
 
 -- SILBER-LILA FARBSCHEMA ---
 config.colors = {
@@ -67,5 +75,35 @@ config.colors = {
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false 
 config.tab_bar_at_bottom = false 
+
+
+--shortcuts 
+config.keys = {
+  --neuertab
+  {
+    key = 't',
+    mods = 'CTRL',
+    action = wezterm.action.SpawnTab 'CurrentPaneDomain',
+  },
+
+  --schließen tab
+  {
+    key = 'w',
+    mods = 'CTRL',
+    action = wezterm.action.CloseCurrentTab { confirm = false },
+  },
+
+  --move
+  {
+    key = 'Tab',
+    mods = 'CTRL',
+    action = wezterm.action.ActivateTabRelative(1),
+  },
+  {
+    key = 'Tab',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.ActivateTabRelative(-1),
+  },
+}
 
 return config
