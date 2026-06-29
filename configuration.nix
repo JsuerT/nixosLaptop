@@ -80,6 +80,7 @@ in
     fd
     unzip
     zip
+    lynx
 
     # für Compilieren von LaTeX
     texliveFull
