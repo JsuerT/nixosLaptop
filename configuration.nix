@@ -59,6 +59,7 @@ in
           main = {
             pageup = "102nd";
             pagedown = "S-102nd";
+            sysrq = "G-102nd";
           };
         };
       };
