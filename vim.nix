@@ -57,8 +57,16 @@ pkgs.vim-full.customize {
     inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
     inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
     inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
   
     "nerdtree"
     autocmd VimEnter * NERDTree | wincmd p
+
+    "zwischen fenster wechseln"
+    nnoremap <A-Left> <C-w>h
+    nnoremap <A-Down> <C-w>j
+    nnoremap <A-Up> <C-w>k
+    nnoremap <A-Right> <C-w>l
+
 '';
 }
