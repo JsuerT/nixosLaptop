@@ -43,6 +43,20 @@ in
     wireplumber.enable = true;
   };
 
+  # Bluetooth & Blueman
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+        Enables = "Source,Sink,Media,Socket";
+      };
+    };
+  };
+  services.blueman.enable = true;
+
+
   # User
   users.users.ticco = {
     isNormalUser = true;
@@ -74,6 +88,8 @@ in
     wezterm
     git
     jdk21
+    cargo
+    rustc
     curl
     wget
     htop
@@ -87,6 +103,7 @@ in
     texliveFull
     biber
 
+    termdown
     discord
     nodejs
     myVim
