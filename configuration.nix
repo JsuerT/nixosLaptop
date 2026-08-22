@@ -83,6 +83,14 @@ in
   # Lizenzen & Unfree
   nixpkgs.config.allowUnfree = true;
 
+  #steam 
+  programs.steam = {
+    enable = true; 
+    remotePlay.openFirewall = true; 
+    dedicatedServer.openFirewall = true; 
+  }; 
+
+
   # System Pakete
   environment.systemPackages = with pkgs; [
     wezterm
@@ -112,7 +120,6 @@ in
     android-tools
     libreoffice
     arduino
-    steam
   ];
 
   environment.etc."xdg/wezterm/wezterm.lua".source = ./wezterm.lua;
