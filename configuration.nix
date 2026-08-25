@@ -126,8 +126,8 @@ in
 
   environment.shellAliases = {
     bye = "shutdown now";
-    Ergo = "cd /run/media/ticco/INTENSO/SchuleErgo";
-    Info = "cd /run/media/ticco/INTENSO/Info";
+    Ergo = "udisksctl mount -b /dev/disk/by-label/INTENSO 2>/dev/null; cd /run/media/ticco/INTENSO/SchuleErgo";
+    Info = "udisksctl mount -b /dev/disk/by-label/INTENSO 2>/dev/null; cd /run/media/ticco/INTENSO/StudiumIT";
     ".." = "cd ..";
     rmdown = "rm -rf ~/Downloads && mkdir Downloads";
     list = ''
