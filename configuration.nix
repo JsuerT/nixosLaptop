@@ -96,6 +96,7 @@ in
     wezterm
     git
     jdk21
+    python3
     cargo
     rustc
     curl
