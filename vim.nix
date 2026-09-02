@@ -1,5 +1,4 @@
 { pkgs }:
-
 pkgs.vim-full.customize {
   name = "vim";
   vimrcConfig.packages.myVimPackage = {
@@ -35,38 +34,31 @@ pkgs.vim-full.customize {
     set clipboard=unnamedplus
     set updatetime=300
     set signcolumn=yes
-
     " Solarized Dark
     set background=dark
     let g:solarized_termcolors = 256
     let g:solarized_use16 = 1
     colorscheme solarized
-
     " Airline
     let g:airline_theme = 'solarized'
     let g:airline_powerline_fonts = 1
-
     " Leader & Keybinds
     let mapleader = " "
     nnoremap <C-n> :NERDTreeToggle<CR>
     nnoremap <leader>ff :Files<CR>
     nnoremap <leader>fg :GFiles<CR>
     nnoremap <F3> :Autoformat<CR>
-
     " CoC (Autocompletion) Konfiguration
     inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
     inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
     inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-
-  
     "nerdtree"
     autocmd VimEnter * NERDTree | wincmd p
-
+    autocmd BufEnter * if winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree() | quit | endif
     "zwischen fenster wechseln"
     nnoremap <A-Left> <C-w>h
     nnoremap <A-Down> <C-w>j
     nnoremap <A-Up> <C-w>k
     nnoremap <A-Right> <C-w>l
-
 '';
 }
