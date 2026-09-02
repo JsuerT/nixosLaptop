@@ -107,8 +107,7 @@ in
     unzip
     zip
     lynx
-
-    # für Compilieren von LaTeX
+    jetbrains.idea-community 
     texliveFull
     biber
 
